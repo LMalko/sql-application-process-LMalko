@@ -1,1 +1,1 @@
-# SQL---application-process
+sqlite3 database.sqlite3 < db.sql
