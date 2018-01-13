@@ -16,4 +16,3 @@ CREATE TABLE IF NOT EXISTS `applicants` (
 	`email`	TEXT UNIQUE,
 	`application_code`	INTEGER NOT NULL UNIQUE
 );
-
