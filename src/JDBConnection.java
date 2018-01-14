@@ -4,21 +4,29 @@ public class JDBConnection{
 
     String filename;
 
-    public JDBC(String filename){
+    public JDBConnection(String filename){
         this.filename = filename;
-        connect_to_database();
     }
 
-    private void connect_to_database() {
+    public Connection connectToDatabase() {
+
         Connection connection = null;
         
         try {
-           Class.forName("org.sqlite.JDBC");
-           connection = DriverManager.getConnection(filename);
-        } catch ( Exception exception ) {
-           System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
-           System.exit(0);
+            // Register JDBC driver.
+            Class.forName("org.sqlite.JDBC");
+            // Open a connection to database.
+            connection = DriverManager.getConnection(filename);
+        }catch ( Exception exception ) {
+            System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
+            System.exit(0);
         }
         System.out.println("Database has opened successfully");
-     }
+        return connection;
+    }
+
+    public void executeStatementAgainstDatabase(String statement){
+        connectToDatabase();
+    }
+
 }
