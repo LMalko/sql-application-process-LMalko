@@ -1,0 +1,14 @@
+***********************************************************************
+*             Mentors & applicants             			      *
+*                                                                     *
+***********************************************************************
+*   1. Return mentors first & last name                               *
+*   2. Return nick name of all mantors from Miskolc                   *
+*   3. Return Carol full name with phone number                       *
+*   4. Name with number of applicant with mail '@adipiscingenimmi.edu'*
+*   5. Insert Markus to applicants                                    *
+*   6. Change Jemima number                                           *
+*   7. Drop applicants with mail 'mauriseu.net'	                      *			
+*   8. Execute statement against the database			      *
+*   0. Exit.                                                          *
+***********************************************************************
