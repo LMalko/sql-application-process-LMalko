@@ -20,7 +20,7 @@ public class JDBConnection{
             // Register JDBC driver.
             Class.forName("org.sqlite.JDBC");
             // Open a connection to database.
-            this.connection = DriverManager.getConnection(filename);
+            connection = DriverManager.getConnection(filename);
         }catch ( Exception exception ) {
             System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
         }
@@ -70,7 +70,13 @@ public class JDBConnection{
     }
 
     public void executeUpdateAgainstDatabase(String update){
-        //statement = connection.createStatement();
+        try{
+            statement = connection.createStatement();
+            statement.executeUpdate(update);
+        }catch (Exception exception){
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.out.println("\n\n\nUpdate was NOT performed successfully");
+        }
         
     }
 
