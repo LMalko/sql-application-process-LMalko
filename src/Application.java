@@ -38,7 +38,12 @@ public class Application{
                 databaseConnection.executeUpdateAgainstDatabase("DELETE FROM applicants WHERE email LIKE '%@mauriseu.net';");
             }else if(userChoice.equals("8")){
                 String userStatement = view.getUserInput("\n\n\nYour statement: ");
-                databaseConnection.executeQueryAgainstDatabase(userStatement);
+                if(userStatement.toUpperCase().startsWith("SELECT")){
+                    databaseConnection.executeQueryAgainstDatabase(userStatement);
+                }else{
+                    databaseConnection.executeUpdateAgainstDatabase(userStatement);
+                }
+                
             }
             view.clearScreen();
         }
