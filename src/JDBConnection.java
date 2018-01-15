@@ -46,11 +46,12 @@ public class JDBConnection{
                 columnNames.add(columnName);
             }
 
+            view.displayText("\n\nResult: \n\n");
             while(result.next()){
                 String row = "";
             
                 for (int i = 0; i < columnNames.size(); i++){
-                    row += result.getString(columnNames.get(i));
+                    row += columnNames.get(i) + ": "+ result.getString(columnNames.get(i));
                     row += "  ";
                 }
                 System.out.println(row);
