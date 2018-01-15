@@ -1,32 +1,87 @@
+import java.util.List;
+import java.util.ArrayList;
 import java.sql.*;
 
 public class JDBConnection{
 
-    String filename;
+    private String filename;
+    private Connection connection = null;
+    private Statement statement = null;
+    private View view = new View();
+    private ResultSet result;
 
     public JDBConnection(String filename){
         this.filename = filename;
     }
 
-    public Connection connectToDatabase() {
-
-        Connection connection = null;
+    Connection connectToDatabase() {
         
         try {
             // Register JDBC driver.
             Class.forName("org.sqlite.JDBC");
             // Open a connection to database.
-            connection = DriverManager.getConnection(filename);
+            this.connection = DriverManager.getConnection(filename);
         }catch ( Exception exception ) {
             System.err.println( exception.getClass().getName() + ": " + exception.getMessage() );
-            System.exit(0);
         }
         System.out.println("Database has opened successfully");
         return connection;
     }
 
-    public void executeStatementAgainstDatabase(String statement){
-        connectToDatabase();
+    public void executeQueryAgainstDatabase(String query){
+        view.clearScreen();
+        try{
+
+            statement = connection.createStatement();
+            ResultSet result = statement.executeQuery(query);
+
+            // Group all column names from query result
+            ResultSetMetaData metaData = result.getMetaData(); 
+            int columnCount = metaData.getColumnCount(); 
+            List<String> columnNames = new ArrayList<String>();
+
+
+            for (int row = 1; row <= columnCount; row++){  
+                String columnName = metaData.getColumnName(row).toString();  
+                columnNames.add(columnName);
+            }
+
+            while(result.next()){
+                String row = "";
+            
+                for (int i = 0; i < columnNames.size(); i++){
+                    row += result.getString(columnNames.get(i));
+                    row += "  ";
+                }
+                System.out.println(row);
+            }
+            System.out.println("\n\n\nQuery performed successfully");
+            
+
+        }catch(Exception exception){
+
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.out.println("\n\n\nQuery was NOT performed successfully");
+
+        }
+
+        view.getUserInput("\n\n\nPress anything to continue");
     }
 
+    public void executeUpdateAgainstDatabase(String update){
+        //statement = connection.createStatement();
+        
+    }
+
+    public void closeDatabase(){
+        try{
+            result.close();
+            statement.close();
+            connection.close();
+
+        }catch(Exception exception){
+            System.err.println(exception.getClass().getName() + ": " + exception.getMessage() );
+            System.exit(0);
+        }
+    }
 }
