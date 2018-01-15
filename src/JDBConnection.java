@@ -7,7 +7,6 @@ public class JDBConnection{
     private String filename;
     private Connection connection = null;
     private Statement statement = null;
-    private View view = new View();
     private ResultSet result;
 
     public JDBConnection(String filename){
@@ -29,7 +28,6 @@ public class JDBConnection{
     }
 
     public void executeQueryAgainstDatabase(String query){
-        view.clearScreen();
         try{
 
             statement = connection.createStatement();
@@ -46,7 +44,7 @@ public class JDBConnection{
                 columnNames.add(columnName);
             }
 
-            view.displayText("\n\nResult: \n\n");
+            System.out.println("\n\nResult: \n\n");
             while(result.next()){
                 String row = "";
             
@@ -65,8 +63,6 @@ public class JDBConnection{
             System.out.println("\n\n\nQuery was NOT performed successfully");
 
         }
-
-        view.getUserInput("\n\n\nPress anything to continue");
     }
 
     public void executeUpdateAgainstDatabase(String update){

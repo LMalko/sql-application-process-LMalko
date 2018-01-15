@@ -17,6 +17,7 @@ public class Application{
         while(true){
             view.displayUserMenu("txt/standardMenu.txt");
             String userChoice = view.getUserInput("\n\n\nChoose option: ");
+            view.clearScreen();
             if(userChoice.equals("0")){
                 databaseConnection.closeDatabase();
                 System.exit(0);
@@ -45,6 +46,7 @@ public class Application{
                 }
                 
             }
+            view.getUserInput("\n\n\nPress anything to continue");
             view.clearScreen();
         }
     }
